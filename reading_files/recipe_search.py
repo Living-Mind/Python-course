@@ -1,5 +1,6 @@
 # Write your solution here
 #1
+#2
 
 
 def search_by_name(filename: str, word: str):
@@ -25,38 +26,36 @@ def search_by_name(filename: str, word: str):
 
 def search_by_time(filename: str, prep_time: int):
 
-    time_dict = {}
-    time_list = []
     name = ""
-    time = 0
+    dict_recipe = {}
+    name_list = []
+    values = []
+    exercise_list = []
+    i = 0
 
     with open(filename) as new_file:
 
         for line in new_file:
-            if line.strip().isdigit(): 
-                time = int(line.strip())
-                print("time here")
-                #print(line.strip())
-                print(name)
-                print(time)
-                time_dict[name] = time
-                time_list.append(name)
 
-            name = line.strip()
+            if line[0].isupper():
+                name_list.append(line.strip())
+                
+            elif line[0].isdigit():
+                values.append(line.strip())
 
+        for name in name_list:
+            dict_recipe[name] = int(values[i])
+            i += 1
 
-            #if prep_time <= time:
-            #    print(f'{name}, preparation time {time} min')
-            print(time_dict)
-            print(time_list)
-            print(time_dict.get("Pancakes"))
-        for n in time_list:
-            if prep_time <= time_dict.get(n):
-                print("ok")
-
-
+        for recipe in dict_recipe:
+            if dict_recipe[recipe] <= prep_time:
+                #print(f'{recipe}, preparation time {dict_recipe[recipe]}')
+                exercise_list.append(f'{recipe}, preparation time {dict_recipe[recipe]} min')
+                
+        print(exercise_list)
+        return exercise_list
 
 if __name__ == "__main__":
 
     #search_by_name("recipes1.txt", "cake")
-    search_by_time("recipes1.txt", 30)
+    search_by_time("recipes1.txt", 20)
